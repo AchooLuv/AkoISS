@@ -1,52 +1,51 @@
-<div align="center">
+﻿<div align="center">
 
 # AKO 以图搜源 · AkoISS
 
-**在线以图搜图工具：反查动漫图片的原始出处，定位番剧截图出自哪一集哪一秒**
+**以图搜图 / 以图搜番 Web 应用 —— 反查动漫图片的原始出处，定位番剧截图出自哪一集哪一秒**
 
 [![在线体验](https://img.shields.io/badge/在线体验-img.muri.life-6d4df6?style=for-the-badge)](https://img.muri.life)
 [![License](https://img.shields.io/badge/license-MIT-0f9d8f?style=for-the-badge)](./LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-ff69b4?style=for-the-badge)](../../pulls)
 
 [![Vue](https://img.shields.io/badge/Vue-3.5-42b883?logo=vuedotjs&logoColor=white)](https://vuejs.org/)
-[![Vite](https://img.shields.io/badge/Vite-6-646cff?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Vite](https://img.shields.io/badge/Vite-6.4-646cff?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Pinia](https://img.shields.io/badge/Pinia-2-ffd859?logo=pinia&logoColor=black)](https://pinia.vuejs.org/)
-[![Element Plus](https://img.shields.io/badge/Element%20Plus-2.9-409eff?logo=elementplus&logoColor=white)](https://element-plus.org/)
+[![Pinia](https://img.shields.io/badge/Pinia-2.3-ffd859?logo=pinia&logoColor=black)](https://pinia.vuejs.org/)
+[![Element Plus](https://img.shields.io/badge/Element%20Plus-2.14-409eff?logo=elementplus&logoColor=white)](https://element-plus.org/)
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-000000?logo=vercel&logoColor=white)](https://vercel.com/)
 
-[在线体验](https://img.muri.life) · [功能](#-功能) · [快速开始](#-快速开始) · [架构说明](#-架构说明) · [已知限制](#-已知限制)
+[在线体验](https://img.muri.life) · [功能](#-功能) · [常见问题](#-常见问题faq) · [快速开始](#-快速开始) · [架构说明](#-架构说明) · [已知限制](#-已知限制)
 
 </div>
 
 ---
 
-> **关键词**：以图搜图 · 以图搜番 · 图片出处查询 · 反向搜图 · 动漫截图识别 · 番剧截图定位 · IQDB · TRACE.MOE · reverse image search · anime scene search
->
-> 如果你在找「怎么查一张动漫图出自哪里」「某张截图是哪部番第几集」，这个项目就是做这件事的：粘贴图片 → 得到图库原图链接 / 番剧名 + 集数 + 时间点。
+**AKO 以图搜源（AkoISS）** 是一个免费、免登录的**在线以图搜图工具**，把 [IQDB](https://iqdb.org/) 与
+[trace.moe](https://trace.moe/) 两个以图搜图引擎聚合到一个界面里：
 
-## 这是什么
+- 想查**「这张动漫图出自哪里 / 原图在哪」** → 用 IQDB，在 Danbooru、Konachan、yande.re、Gelbooru、Sankaku、e-shuushuu、Zerochan、Anime-Pictures 共 8 个图库中反查出处
+- 想查**「这张截图是哪部番的第几集第几秒」** → 用 TRACE.MOE，定位番剧、集数与具体时间点，并可播放命中片段
 
-**AkoISS（AKO Image Source Search）** 是一个纯前端的在线以图搜图 Web 应用，把两个以图搜图引擎聚合成一个界面：
+无需注册、无需 API Key，支持**拖拽 / 粘贴（Ctrl + V）/ 图片 URL** 三种投图方式，内置浅色与深色主题，移动端自适应。
+如果你在用 SauceNAO、ASCII2D 或 ascii2d 找图但受限于额度或需要 Key，也可以把它当作轻量的补充工具。
 
-| 引擎 | 它能回答什么 | 数据来源 |
-| --- | --- | --- |
-| **IQDB** | 这张图出自哪个图库？原图在哪？ | Danbooru、Konachan、yande.re、Gelbooru、Sankaku、e-shuushuu、Zerochan、Anime-Pictures 共 8 个图库 |
-| **TRACE.MOE** | 这张截图出自哪部番剧的第几集第几秒？ | trace.moe 的动画帧索引，附可播放的命中片段 |
-
-免费、免登录、无需 API Key。支持深色模式与移动端。
+> **关键词**：以图搜图 · 以图搜番 · 图片出处查询 · 反向搜图 · 图片来源查询 · 动漫截图识别 · 番剧截图定位 ·
+> 在线搜图工具 · IQDB · TRACE.MOE · trace.moe · Danbooru · yande.re · Konachan ·
+> reverse image search · anime scene search · source finder
 
 ## ✨ 功能
 
-- **四种图片来源**：点击选择、拖拽、`Ctrl + V` 直接粘贴截图、填入图片 URL
+- **四种投图方式**：点击选择文件、拖拽图片、`Ctrl + V` 直接粘贴截图、填入图片 URL
 - **两个搜索引擎，同一套结果体验**
-  - IQDB：展示来源图库（含站点图标）、原站帖子号、原图尺寸、图片评级，并把 Danbooru 系标签译成中文（`absurdres` → 超高分辨率）
-  - TRACE.MOE：展示番剧名（优先中文标题）、集数、出现时间区间，可直接播放命中片段
-- **结果交互**：按匹配度排序、星标把重点候选置顶、点击大图预览、原图直达、加载骨架屏
-- **解释性提示**：两个引擎的「匹配度」含义不同会明确说明；被相似度阈值过滤掉的候选数量也会如实告知，避免"接口有数据却看不到结果"的困惑
+  - **IQDB**：展示来源图库（含站点图标）、原站帖子号、原图尺寸、图片评级，并把 Danbooru 系标签译成中文（`absurdres` → 超高分辨率）
+  - **TRACE.MOE**：展示番剧名（优先中文标题）、集数、出现时间区间，可直接原地播放命中片段
+- **结果交互**：按匹配度排序、星标把重点候选置顶、点击大图预览、原图直达、加载骨架屏与失败兜底
+- **解释性提示**：两个引擎的「匹配度」含义不同会明确说明；被相似度阈值过滤掉的候选数量也如实告知，避免「接口有数据却看不到结果」的困惑
 - **额度提示**：实时显示 TRACE.MOE 当日剩余额度，避免撞上限流
-- **最近搜索记录**，便于回看
+- **最近搜索记录**：便于回看本次会话搜过什么
 - **主题**：浅色 / 深色一键切换并记忆，首次访问跟随系统偏好
-- **SEO 就绪**：完整 meta / Open Graph / Twitter Card / JSON-LD 结构化数据、`robots.txt`、`sitemap.xml`、PWA manifest
+- **对搜索引擎友好**：完整 meta / Open Graph / Twitter Card / JSON-LD 结构化数据、`robots.txt`、`sitemap.xml`、PWA manifest
 
 ### SEO 清单
 
@@ -63,6 +62,74 @@
 > OG 图以 `public/og-image.svg` 为源文件，导出为 `og-image.png`（主流社交平台对 SVG 的
 > OG 图支持不统一）。改过 SVG 后需按 [`tools/og-image-export.html`](./tools/og-image-export.html)
 > 里的步骤重新导出一次。
+
+## ❓ 常见问题（FAQ）
+
+<details>
+<summary><b>怎么查一张动漫图片的出处 / 原图？</b></summary>
+
+打开 [img.muri.life](https://img.muri.life)，把图片拖进去（或直接 `Ctrl + V` 粘贴截图），
+选中 **IQDB** 后点「开始搜索」。结果按匹配度排序，每条都会给出**来源图库、原站帖子号和原图尺寸**，
+点「查看原图页面」即可跳到 Danbooru / yande.re 等站点的原始页面。
+如果截图被调过色，可以勾选「忽略色彩」改用灰度特征匹配。
+</details>
+
+<details>
+<summary><b>怎么查一张截图出自哪部番剧的第几集？</b></summary>
+
+同一张图切到 **TRACE.MOE** 引擎再搜一次。结果会给出**番剧名（优先中文）、集数、出现时间区间**，
+并且可以点「看片段」直接播放命中的动画片段，用来确认是否真的对得上。
+</details>
+
+<details>
+<summary><b>需要注册、登录或申请 API Key 吗？</b></summary>
+
+都不需要。前端不收集任何账号信息，IQDB 与 trace.moe 也都不要求 Key。
+唯一的限制来自 trace.moe：**匿名额度按出口 IP 计算（当前 100 次/天）**，界面会实时显示剩余额度。
+如果你自行部署到 Serverless 平台，这个额度是所有访客共享的。
+</details>
+
+<details>
+<summary><b>为什么匹配度只有 20% 多，是没匹配上吗？</b></summary>
+
+不是。**两个引擎的「匹配度」不是一个量纲**：
+
+- IQDB 的匹配度是**缩略图层面的视觉相似度**，20% 以上就可能是同一张图的转载、压缩或裁剪版本，应以图库详情页为准
+- TRACE.MOE 的匹配度是**帧级相似度**，通常 70% 以上才有参考价值，本应用只展示高于该阈值的结果
+
+界面上对这两点都有对应说明。
+</details>
+
+<details>
+<summary><b>搜不到结果一般是什么原因？</b></summary>
+
+常见原因有三种，界面上都会给出可读提示而不是静默失败：
+
+1. **图不是番剧截图**（同人图、游戏 CG、真人照片），TRACE.MOE 自然会没有结果
+2. **截图被裁剪或加了滤镜/水印**，导致特征丢失 —— 可以试试 TRACE.MOE 的「裁剪图片边缘」
+3. **图片在图库中没有收录**，IQDB 返回 0 条属于正常情况
+
+另外图片体积限制为 8 MB，格式支持 JPG / PNG / GIF / WebP。
+</details>
+
+<details>
+<summary><b>图片会被保存吗？隐私如何？</b></summary>
+
+不会。本应用没有后端数据库，图片只在你点击搜索时通过代理转发给 IQDB / trace.moe 官方接口，
+搜索完成后不在任何地方留存。仓库里也没有任何埋点或第三方统计脚本。
+</details>
+
+<details>
+<summary><b>为什么不用 SauceNAO / ASCII2D / E-Hentai？</b></summary>
+
+不是遗漏，是这三个目前都接不了，界面上也如实标注为「开发中 / 已禁用」：
+
+- **SauceNAO** 已关闭匿名 API，会直接返回 `The anonymous account type does not permit API usage.`，需要付费 Key
+- **E-Hentai** 屏蔽数据中心出口 IP，且图片搜索需要登录 Cookie
+- **ASCII2D** 位于 Cloudflare 之后，服务端 POST 无法通过 JS 质询
+
+完整的实测过程与替代方案评估见 [引擎支持评估](docs/engine-support-assessment.md)。
+</details>
 
 ## 🚀 快速开始
 
@@ -84,10 +151,10 @@ npm run lint       # ESLint 校验并自动修复
 
 | 分类 | 选型 |
 | --- | --- |
-| 框架 | Vue 3.5（`<script setup>`） |
-| 构建 | Vite 6 + TypeScript 5.6 + vue-tsc |
+| 框架 | Vue 3.5（`<script setup>` 组合式 API） |
+| 构建 | Vite 6.4 + TypeScript 5.6 + vue-tsc |
 | 状态管理 | Pinia 2（setup store 写法） |
-| UI | Element Plus 2.9 + `@element-plus/icons-vue` |
+| UI | Element Plus 2.14 + `@element-plus/icons-vue` |
 | 路由 | Vue Router 4（history 模式） |
 | 请求 / 解析 | axios、cheerio（解析 IQDB 返回的 HTML） |
 | 样式 | SCSS + 设计令牌（CSS 变量）双主题 |
@@ -168,36 +235,36 @@ src/
 ## 📸 截图
 
 > 欢迎补充自己的运行截图（建议放在 `docs/screenshot-light.png` 与 `docs/screenshot-dark.png`），
-> 截图能显著提升仓库在搜索结果里的点击率。
+> 仓库首页有截图能显著提升在搜索结果里的点击率。
 
 ## ⚠️ 已知限制
 
-- **ASCII2D / SAUCENAO / EHENTAI 未接入**，原因已在界面上如实标注：
-  - SauceNAO 已关闭匿名 API（返回 `The anonymous account type does not permit API usage.`），需要付费 Key
-  - E-Hentai 屏蔽数据中心出口 IP，且图片搜索需要登录 Cookie
-  - ASCII2D 位于 Cloudflare 之后，服务端 POST 无法通过 JS 质询
-
-  详见 [引擎支持评估](docs/engine-support-assessment.md)
+- **ASCII2D / SAUCENAO / EHENTAI 未接入**，原因见 [常见问题](#-常见问题faq) 与
+  [引擎支持评估](docs/engine-support-assessment.md)
 - **IQDB 依赖站点 HTML 结构**解析，站点改版后需要同步调整选择器（解析失败会给出可读提示，不会静默返回空）
-- **TRACE.MOE 匿名额度按出口 IP 计算**（当前 100 次/天），Serverless 部署时所有用户共享该额度
-- **两个引擎的「匹配度」不是一个量纲**：IQDB 是缩略图层面的视觉相似度，20% 以上就可能是同一张图的转载，界面已加说明
+- **TRACE.MOE 匿名额度按出口 IP 计算**（当前 100 次/天），Serverless 部署时所有访客共享该额度
+- **两个引擎的「匹配度」不是一个量纲**，详见 [常见问题](#-常见问题faq)
+- **上游可用性不受本仓库控制**：IQDB 与 trace.moe 均为第三方公益服务，请遵守其使用条款并避免高频请求
 
 ## 🗺 Roadmap
 
 - [x] 引擎描述符架构，两个引擎统一结果模型
-- [x] 粘贴 / 拖拽 / URL 多种图片来源
+- [x] 粘贴 / 拖拽 / URL 多种投图方式
 - [x] 双主题、响应式、结果星标与大图预览
 - [x] SEO 与社交分享元信息、结构化数据
 - [ ] 根据番剧名在 Bangumi 查询并展示番剧信息
 - [ ] 同一张图的多引擎结果并列对比
+- [ ] Element Plus 按需引入，进一步压缩产物体积
 
 ## 🤝 贡献
 
-欢迎提交 Issue 与 PR。开始之前建议先跑一遍：
+欢迎提交 [Issue](../../issues) 与 [PR](../../pulls)。开始之前建议先跑一遍：
 
 ```bash
 npm run type-check && npm run lint && npm run build
 ```
+
+如果这个项目对你有帮助，欢迎点一个 ⭐ Star；也欢迎补充引擎支持、修正文档或反馈上游接口变化。
 
 ## 📄 License
 
@@ -206,8 +273,6 @@ npm run type-check && npm run lint && npm run build
 ---
 
 <div align="center">
-
-**如果这个项目帮你找到了图片来源，欢迎点一个 ⭐ Star**
 
 本项目使用了 [IQDB](https://iqdb.org/) 与 [trace.moe](https://trace.moe/) 的公开服务，请遵守其使用条款。
 
