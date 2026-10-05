@@ -127,6 +127,8 @@ export const ENGINES: EngineDef[] = [
         hint: '以灰度特征匹配，适合截图被调过色的情况',
         param: 'forcegray',
         value: 'on',
+        // 灰度匹配会牺牲彩色特征，默认不开启
+        defaultChecked: false,
       },
     ],
     request: requestIqdb,
@@ -146,6 +148,7 @@ export const ENGINES: EngineDef[] = [
         hint: '去掉上下黑边或水印边框后再匹配，可提升命中率',
         param: 'cutBorders',
         value: true,
+        defaultChecked: true,
       },
     ],
     request: requestTraceMoe,
@@ -161,11 +164,11 @@ export const getEngine = (id: EngineId): EngineDef => {
   return engine
 }
 
-/** 取引擎选项的默认值，形如 { cutBorders: true } */
+/** 取引擎选项的默认值，形如 { cutBorders: true }；只有显式声明 defaultChecked: true 的才默认开启 */
 export const defaultOptions = (id: EngineId): Record<string, unknown> =>
   Object.fromEntries(
     getEngine(id)
-      .options.filter((option) => option.defaultChecked !== false)
+      .options.filter((option) => option.defaultChecked === true)
       .map((option) => [option.id, option.value ?? true])
   )
 

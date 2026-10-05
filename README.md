@@ -48,6 +48,22 @@
 - **主题**：浅色 / 深色一键切换并记忆，首次访问跟随系统偏好
 - **SEO 就绪**：完整 meta / Open Graph / Twitter Card / JSON-LD 结构化数据、`robots.txt`、`sitemap.xml`、PWA manifest
 
+### SEO 清单
+
+| 项 | 位置 |
+| --- | --- |
+| title / description / keywords | [`index.html`](./index.html) |
+| Open Graph（含 1200×630 卡片图） | [`index.html`](./index.html)、`public/og-image.png` |
+| Twitter Card | [`index.html`](./index.html) |
+| JSON-LD 结构化数据（WebSite + WebApplication） | [`index.html`](./index.html) |
+| 路由级动态 title / description / canonical | [`src/utils/seo.ts`](./src/utils/seo.ts)、[`src/router/index.ts`](./src/router/index.ts) |
+| 爬虫规则与站点地图 | `public/robots.txt`、`public/sitemap.xml` |
+| PWA manifest | `public/site.webmanifest` |
+
+> OG 图以 `public/og-image.svg` 为源文件，导出为 `og-image.png`（主流社交平台对 SVG 的
+> OG 图支持不统一）。改过 SVG 后需按 [`tools/og-image-export.html`](./tools/og-image-export.html)
+> 里的步骤重新导出一次。
+
 ## 🚀 快速开始
 
 ```bash
@@ -83,7 +99,8 @@ npm run lint       # ESLint 校验并自动修复
 
 ```
 api/proxy.js               Vercel Serverless 代理（/iqdb、/trace → 图源）
-public/                    robots.txt、sitemap.xml、site.webmanifest、og-image.svg
+public/                    robots.txt、sitemap.xml、site.webmanifest、og-image.png/svg
+tools/og-image-export.html og-image 导出页（开发工具，不参与部署）
 src/
 ├─ main.ts                 入口：装配 Element Plus / 路由 / Pinia / 主题
 ├─ router/index.ts         路由表 + 路由级 SEO（title / description / canonical）

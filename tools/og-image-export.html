@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>og-image 导出页</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      background: #0e1016;
+    }
+
+    img {
+      display: block;
+      width: 1200px;
+      height: 630px;
+      border: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!--
+    og-image 导出页（开发工具，不参与部署）
+
+    用途：把 public/og-image.svg 渲染成 1200×630 的 public/og-image.png。
+    步骤：
+      1. npm run dev
+      2. 用浏览器打开 http://localhost:5199/og-image.svg
+         （或直接把本文件拖进浏览器，图片路径为相对路径 /og-image.svg）
+      3. 对 1200×630 的图片区域截图，覆盖保存为 public/og-image.png
+
+    注意：改过 og-image.svg 之后必须重新导出 PNG，否则社交卡片与源文件会不一致。
+  -->
+  <img src="/og-image.svg" alt="og-image 预览" width="1200" height="630">
+</body>
+
+</html>
