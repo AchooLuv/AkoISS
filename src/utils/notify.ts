@@ -1,6 +1,6 @@
-import { ElNotification } from 'element-plus'
+﻿import { ElNotification } from 'element-plus'
 
-export type TipsLevel = 'success' | 'error' | 'warning' | 'info'
+type TipsLevel = 'success' | 'error' | 'warning' | 'info'
 
 const TITLES: Record<TipsLevel, string> = {
   success: '搜索成功',

@@ -7,13 +7,10 @@ const NotFound = () => import('@/views/404/NotFound.vue')
 
 declare module 'vue-router' {
   interface RouteMeta {
-    menu?: boolean
     title?: string
     description?: string
     /** 是否允许搜索引擎收录 */
     indexable?: boolean
-    icon?: string
-    auth?: boolean
   }
 }
 

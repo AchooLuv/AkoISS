@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 设计令牌：统一在 :root 上声明，再为暗色覆盖。
  * 组件里只引用 var(--ako-*)，不再写死颜色，从而让主题切换一次生效。
  */
@@ -6,8 +6,6 @@
   --ako-radius-sm: 8px;
   --ako-radius: 12px;
   --ako-radius-lg: 18px;
-  --ako-gap: 16px;
-  --ako-gap-sm: 10px;
   --ako-max-width: 1320px;
 
   --ako-brand: #6d4df6;
@@ -25,13 +23,11 @@
   --ako-text-2: #4d5470;
   --ako-text-3: #8b91a8;
 
-  --ako-success: #16a34a;
   --ako-warning: #d97706;
   --ako-danger: #dc2626;
 
   --ako-shadow-sm: 0 1px 2px rgba(24, 28, 50, 0.05);
   --ako-shadow: 0 6px 20px rgba(24, 28, 50, 0.07);
-  --ako-shadow-lg: 0 14px 40px rgba(24, 28, 50, 0.12);
 
   --ako-blur-bg: rgba(255, 255, 255, 0.72);
 }
@@ -52,13 +48,11 @@ html.dark {
   --ako-text-2: #b3b9cd;
   --ako-text-3: #7b8299;
 
-  --ako-success: #34d399;
   --ako-warning: #fbbf24;
   --ako-danger: #f87171;
 
   --ako-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --ako-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-  --ako-shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.55);
 
   --ako-blur-bg: rgba(23, 26, 36, 0.72);
 }

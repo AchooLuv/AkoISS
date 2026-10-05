@@ -1,7 +1,3 @@
-export type Self = {
-  [idx: string]: unknown
-}
-
 /** 被支持的引擎标识 */
 export type EngineId = 'iqdb' | 'tracemoe'
 
@@ -20,7 +16,7 @@ export interface SearchUpload {
 }
 
 /** 引擎可选项（对应原来 treeData 的二级节点） */
-export interface EngineOption {
+interface EngineOption {
   /** 选项标识，同时作为配置项 key */
   id: string
   label: string
@@ -90,7 +86,7 @@ export interface ResultType {
   tags?: string[]
 }
 
-export type ResultFieldKind = 'tag' | 'link' | 'text' | 'timestamp' | 'tags'
+type ResultFieldKind = 'tag' | 'link' | 'text' | 'timestamp' | 'tags'
 
 /** 结果卡片上的一个字段描述 */
 export interface ResultField {

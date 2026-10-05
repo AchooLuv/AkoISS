@@ -1,8 +1,8 @@
-import * as cheerio from 'cheerio'
+﻿import * as cheerio from 'cheerio'
 import { translateTags } from '@/utils/tags'
 import type { ResultType } from '@/types/common'
 
-export const IQDB_ORIGIN = 'https://iqdb.org'
+const IQDB_ORIGIN = 'https://iqdb.org'
 /** 默认检索的图库，与 iqdb.org 表单里默认勾选的 8 项一致（1-6 / 11 / 13） */
 export const IQDB_SERVICES = [1, 2, 3, 4, 5, 6, 11, 13]
 /** 需要发送给 IQDB 的 URL 检索参数名 */

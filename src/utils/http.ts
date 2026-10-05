@@ -1,10 +1,10 @@
-import axios from 'axios'
+﻿import axios from 'axios'
 import { tipsType } from '@/utils/notify'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
-export const AXIOS_TIMEOUT = 90000
+const AXIOS_TIMEOUT = 90000
 
-export class Request {
+class Request {
   instance: AxiosInstance
   baseConfig: AxiosRequestConfig = { baseURL: import.meta.env.BASE_URL, timeout: AXIOS_TIMEOUT }
 

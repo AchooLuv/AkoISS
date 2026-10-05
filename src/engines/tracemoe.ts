@@ -1,6 +1,6 @@
-import type { ResultType } from '@/types/common'
+﻿import type { ResultType } from '@/types/common'
 
-export const TRACEMOE_ORIGIN = 'https://api.trace.moe'
+const TRACEMOE_ORIGIN = 'https://api.trace.moe'
 /** 展示用的最低相似度，低于该值的结果基本没有参考价值 */
 export const TRACEMOE_MIN_SIMILARITY = 0.7
 /** trace.moe 单张图片最多返回的候选数量 */
@@ -8,7 +8,7 @@ export const TRACEMOE_LIMIT = 12
 
 export const TRACEMOE_URL_PARAM = 'url'
 
-export interface TraceMoeQuota {
+interface TraceMoeQuota {
   id: string
   /** 每日额度上限（按 IP 计算） */
   quota: number
@@ -67,7 +67,7 @@ export const fetchQuota = async (): Promise<TraceMoeQuota> => {
  * 解析结果附带"被相似度阈值挡掉多少条"的信息，
  * 用于在全部低于阈值时给出可解释的提示，而不是只显示一句"没有结果"。
  */
-export interface ParseReport {
+interface ParseReport {
   list: ResultType[]
   /** 接口返回但相似度不足被过滤掉的条数 */
   rejected: number

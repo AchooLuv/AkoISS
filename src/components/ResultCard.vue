@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { ellipsisName } from '@/utils/format'
 import type { ResultField, ResultType } from '@/types/common'
@@ -6,7 +6,6 @@ import type { ResultField, ResultType } from '@/types/common'
 const props = defineProps<{
   item: ResultType
   index: number
-  engineId: string
   fields: ResultField[]
   marked: boolean
 }>()

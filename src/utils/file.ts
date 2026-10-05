@@ -1,6 +1,6 @@
-/** 文件相关的纯函数工具 */
+﻿/** 文件相关的纯函数工具 */
 
-export const MAX_FILE_SIZE = 8 * 1024 * 1024 // IQDB 限制 8MiB（表单 MAX_FILE_SIZE）
+const MAX_FILE_SIZE = 8 * 1024 * 1024 // IQDB 限制 8MiB（表单 MAX_FILE_SIZE）
 export const ACCEPTED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
 
 const EXT_MAP: Record<string, string> = {
@@ -17,7 +17,7 @@ export const formatBytes = (bytes: number): string => {
   return `${(bytes / 1024 / 1024).toFixed(2)} MB`
 }
 
-export const isImageFile = (file: File): boolean =>
+const isImageFile = (file: File): boolean =>
   file.type.startsWith('image/') || /\.(jpe?g|png|gif|webp|bmp)$/i.test(file.name)
 
 /** 校验上传文件，返回错误文案（通过则为 null） */

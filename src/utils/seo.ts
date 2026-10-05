@@ -1,9 +1,9 @@
-/**
+﻿/**
  * 站点 SEO 相关的集中定义。
  * 站点地址与主标题/描述在 index.html 里也有一份（供爬虫与社交卡片直接读取），
  * 修改时请两处同步。
  */
-export const SITE_URL = 'https://img.muri.life'
+const SITE_URL = 'https://img.muri.life'
 export const SITE_NAME = 'AKO 以图搜源'
 
 export const HOME_TITLE = 'AKO 以图搜源 - 在线以图搜图，反查图片出处与番剧截图来源'
@@ -31,7 +31,7 @@ const setCanonical = (href: string) => {
   el.setAttribute('href', href)
 }
 
-export interface SeoInput {
+interface SeoInput {
   title: string
   description: string
   /** 规范化路径，如 '/' 或 '/404' */

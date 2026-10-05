@@ -103,7 +103,6 @@ const list = computed(() => resultStore.ordered(props.engineId))
           :key="item.id"
           :item="item"
           :index="index"
-          :engine-id="engineId"
           :fields="fields"
           :marked="resultStore.isMarked(item.id)"
           @mark="resultStore.toggleMark"

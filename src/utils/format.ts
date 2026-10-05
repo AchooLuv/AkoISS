@@ -12,12 +12,6 @@ export const getHMS = (seconds: number): string => {
   return [h, m, s].map((value) => String(value).padStart(2, '0')).join(':')
 }
 
-/** 相似度 → 统一的 0~100 百分比（兼容 0~1 小数与 0~100 整数两种来源） */
-export const toPercent = (similarity: number): number => {
-  const value = similarity > 1 ? similarity : similarity * 100
-  return Math.max(0, Math.min(100, Math.round(value)))
-}
-
 /** 时间戳 → "刚刚 / 3 分钟前" */
 export const fromNow = (at: number): string => {
   const diff = Math.max(0, Date.now() - at)
