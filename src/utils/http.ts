@@ -1,128 +1,68 @@
-import axios from 'axios';
-import { tipsType } from '@/data/format'
-import { useResultStore } from '@/stores/result'
-import type { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig, AxiosResponse } from 'axios'
+import axios from 'axios'
+import { tipsType } from '@/utils/notify'
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
-const resultStore = useResultStore()
-
-type Result<T> = {
-  code: number;
-  message: string;
-  data: T;
-  result: T;
-};
-
+export const AXIOS_TIMEOUT = 90000
 
 export class Request {
-  instance: AxiosInstance;
-  baseConfig: AxiosRequestConfig = { baseURL: import.meta.env.BASE_URL, timeout: 60000 };
+  instance: AxiosInstance
+  baseConfig: AxiosRequestConfig = { baseURL: import.meta.env.BASE_URL, timeout: AXIOS_TIMEOUT }
 
   constructor(config: AxiosRequestConfig) {
-    this.instance = axios.create(Object.assign(this.baseConfig, config));
-
-    this.instance.interceptors.request.use(
-      (config: InternalAxiosRequestConfig) => {
-        config.headers['Content-Type'] = 'multipart/form-data'
-        return config;
-      },
-      (err: any) => {
-        return Promise.reject(err);
-      }
-    );
+    this.instance = axios.create(Object.assign({}, this.baseConfig, config))
 
     this.instance.interceptors.response.use(
-      (res: AxiosResponse) => {
-        return res;
-      },
-      (err: any) => {
-        let message = '';
-        switch (err.response.status) {
-          case 400:
-            message = '请求错误(400)';
-            break;
-          case 401:
-            message = '未授权，请重新登录(401)';
-            break;
-          case 403:
-            message = '拒绝访问(403)';
-            break;
-          case 404:
-            message = '请求出错(404)';
-            break;
-          case 408:
-            message = '请求超时(408)';
-            break;
-          case 500:
-            message = '服务器错误(500)';
-            break;
-          case 501:
-            message = '服务未实现(501)';
-            break;
-          case 502:
-            message = '网络错误(502)';
-            break;
-          case 503:
-            message = '服务不可用(503)';
-            break;
-          case 504:
-            message = '网络超时(504)';
-            break;
-          case 505:
-            message = 'HTTP版本不受支持(505)';
-            break;
-          default:
-            message = `连接出错(${err.response.status})!`;
+      (res: AxiosResponse) => res,
+      (error: unknown) => {
+        const err = error as { response?: { status?: number }; message?: string; code?: string }
+        const status = err.response?.status
+
+        // 没有响应体的错误（超时 / 断网 / 被拦截）不会走到下面的 switch，需要单独兜底
+        if (!status) {
+          const msg =
+            err.code === 'ECONNABORTED'
+              ? '请求超时，图源站点响应过慢，可稍后重试'
+              : `无法连接到图源站点${err.message ? `（${err.message}）` : ''}`
+          return Promise.reject(Object.assign(new Error(msg), { friendly: msg }))
         }
-        resultStore.isLoading = false
-        tipsType(false, message)
-        return Promise.reject(err.response);
+
+        const MAP: Record<number, string> = {
+          400: '请求被图源拒绝（400），可能是图片格式不受支持',
+          401: '图源要求授权（401）',
+          403: '图源拒绝了本次请求（403），可能触发了反爬限制',
+          404: '图源接口不存在（404）',
+          408: '请求超时（408）',
+          413: '图片体积过大被图源拒绝（413）',
+          429: '请求过于频繁（429），请稍后再试',
+          500: '图源服务器错误（500）',
+          502: '图源网关错误（502）',
+          503: '图源服务不可用（503）',
+          504: '图源响应超时（504）',
+        }
+        const msg = MAP[status] ?? `请求失败（HTTP ${status}）`
+        tipsType(false, msg)
+        return Promise.reject(Object.assign(new Error(msg), { friendly: msg, status }))
       }
-    );
+    )
   }
 
-  public request(config: AxiosRequestConfig): Promise<AxiosResponse> {
-    return this.instance.request(config);
+  public request<T = unknown>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+    return this.instance.request<T>(config)
   }
 
-  public get<T = any>(
+  public get<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+    return this.instance.get<T>(url, config)
+  }
+
+  public post<T = unknown>(
     url: string,
+    data?: unknown,
     config?: AxiosRequestConfig
-  ): Promise<AxiosResponse<Result<T>>> {
-    return this.instance.get(url, config);
-  }
-
-  public post<T = any>(
-    url: string,
-    data?: any,
-    config?: AxiosRequestConfig
-  ): Promise<AxiosResponse<Result<T>>> {
-    return this.instance.post(url, data, config);
-  }
-
-  public put<T = any>(
-    url: string,
-    data?: any,
-    config?: AxiosRequestConfig
-  ): Promise<AxiosResponse<Result<T>>> {
-    return this.instance.put(url, data, config);
-  }
-
-  public delete<T = any>(
-    url: string,
-    config?: AxiosRequestConfig
-  ): Promise<AxiosResponse<Result<T>>> {
-    return this.instance.delete(url, config);
+  ): Promise<AxiosResponse<T>> {
+    return this.instance.post<T>(url, data, config)
   }
 }
 
 const ako = new Request({})
 
 export default ako
-
-// const ako: Http = {
-//   get(url, data, config) {
-//     return http.get(url, {
-//       params: data,
-//       ...config
-//     })
-//   },

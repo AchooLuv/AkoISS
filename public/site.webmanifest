@@ -1,0 +1,19 @@
+{
+  "name": "AKO 以图搜源",
+  "short_name": "AKO 搜源",
+  "description": "在线以图搜图工具：反查动漫图片出处与番剧截图来源。",
+  "lang": "zh-CN",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0e1016",
+  "theme_color": "#6d4df6",
+  "categories": ["utilities", "multimedia", "graphics"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

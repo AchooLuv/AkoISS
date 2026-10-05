@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# 图片搜索是核心功能，不希望被搜索引擎抓取示例图片/接口路径
+Disallow: /api/
+Disallow: /iqdb
+Disallow: /trace
+
+Sitemap: https://img.muri.life/sitemap.xml

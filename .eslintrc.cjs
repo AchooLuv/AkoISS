@@ -11,5 +11,19 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest'
-  }
+  },
+  overrides: [
+    {
+      // Vercel Serverless 函数运行在 CommonJS 的 Node 环境
+      files: ['api/**/*.js'],
+      env: { node: true }
+    },
+    {
+      // 路由级视图沿用目录名做组件名，无需强制多词
+      files: ['src/views/**/*.vue', 'src/Home.vue'],
+      rules: {
+        'vue/multi-word-component-names': 'off'
+      }
+    }
+  ]
 }
