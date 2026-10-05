@@ -154,6 +154,17 @@ src/
 所有颜色收敛到 `src/assets/styles/tokens.scss` 的 `--ako-*` CSS 变量，并把 Element Plus
 的变量映射到同一套令牌上，因此主题切换只需在 `<html>` 上增删 `.dark` 类。
 
+## 🔐 依赖与安全
+
+- **无循环依赖**：`src` 下 29 个模块、59 条依赖边，经图分析（Tarjan 强连通分量）确认无环。
+- **依赖保持更新**：`package.json` 使用 `^` 范围，建议定期执行 `npm update` 拉满范围内版本。
+  仓库历史上的 Dependabot 告警绝大多数源于「lockfile 落后于声明的范围」，而非范围本身过宽。
+- **唯一未修复项**：`braces@3.0.3`（深层嵌套 pattern 导致栈溢出，上游无补丁版本，
+  `micromatch@4.0.8` 仍依赖它）。它的引入路径是
+  `http-proxy-middleware → micromatch → braces`，**只存在于 Vercel Serverless 侧**，
+  匹配的是写死的 `/iqdb`、`/trace` 前缀，不接触用户输入；且不在前端产物中（`dist` 内零命中），
+  对浏览器端用户无影响。
+
 ## 📸 截图
 
 > 欢迎补充自己的运行截图（建议放在 `docs/screenshot-light.png` 与 `docs/screenshot-dark.png`），
