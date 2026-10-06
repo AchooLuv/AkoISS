@@ -1,4 +1,4 @@
-﻿import type { ResultType } from '@/types/common'
+import type { ResultType } from '@/types/common'
 
 const TRACEMOE_ORIGIN = 'https://api.trace.moe'
 /** 展示用的最低相似度，低于该值的结果基本没有参考价值 */

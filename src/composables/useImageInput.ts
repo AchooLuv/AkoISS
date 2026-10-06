@@ -1,4 +1,4 @@
-﻿import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { fileFromClipboard, fileFromDataTransfer, fileFromUrl, validateFile } from '@/utils/file'
 import { tipsType } from '@/utils/notify'
 import type { SearchUpload, UploadSource } from '@/types/common'

@@ -43,18 +43,18 @@ const onSearch = async () => {
 </script>
 
 <template>
-  <div class="ako-shell">
-    <header class="ako-header">
-      <div class="ako-container ako-header__inner">
-        <div class="ako-header__logo">
-          <span class="logo-mark">AKO</span>
+  <div class="luoma-shell">
+    <header class="luoma-header">
+      <div class="luoma-container luoma-header__inner">
+        <div class="luoma-header__logo">
+          <span class="logo-mark">LuoMa</span>
           <span class="logo-text">
-            <b>以图搜源</b>
-            <small>Image Source Search</small>
+            <b>骡马搜图</b>
+            <small>LuoMa Image Search</small>
           </span>
         </div>
-        <div class="ako-header__spacer" />
-        <div class="ako-header__actions">
+        <div class="luoma-header__spacer" />
+        <div class="luoma-header__actions">
           <el-popover v-model:visible="helpVisible" placement="bottom-end" :width="330" trigger="click">
             <template #reference>
               <el-button link>
@@ -74,24 +74,24 @@ const onSearch = async () => {
                 <li v-for="engine in searchStore.engines" :key="engine.id">
                   <span class="dot" :style="{ background: engine.accent }" />
                   <b>{{ engine.label }}</b>
-                  <span class="ako-muted">{{ engine.subtitle }}</span>
+                  <span class="luoma-muted">{{ engine.subtitle }}</span>
                   <el-tag size="small" type="success" round>已部署</el-tag>
                 </li>
                 <li v-for="item in plannedEngines" :key="item.label">
-                  <span class="dot" style="background: var(--ako-text-3)" />
+                  <span class="dot" style="background: var(--luoma-text-3)" />
                   <b>{{ item.label }}</b>
                   <el-tag size="small" :type="item.status < 0 ? 'danger' : 'info'" round>
                     {{ item.status < 0 ? '已禁用' : '开发中' }}
                   </el-tag>
                 </li>
               </ul>
-              <p class="ako-muted help__foot">
+              <p class="luoma-muted help__foot">
                 IQDB 与 TRACE.MOE 由服务端代理转发，无需自行处理跨域。
               </p>
             </div>
           </el-popover>
           <el-link
-            href="https://github.com/AchooLuv/AkoISS"
+            href="https://github.com/AchooLuv/LuoMaSouTu"
             target="_blank"
             rel="noopener noreferrer"
             underline="never"
@@ -104,9 +104,9 @@ const onSearch = async () => {
       </div>
     </header>
 
-    <main class="ako-main">
-      <div class="ako-container layout">
-        <aside class="panel ako-card">
+    <main class="luoma-main">
+      <div class="luoma-container layout">
+        <aside class="panel luoma-card">
           <UploadPanel :upload="searchStore.upload" :loading="loading" @change="onUpload" @clear="onClear" />
 
           <el-divider class="panel__divider" />
@@ -151,14 +151,15 @@ const onSearch = async () => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
+  /* 品牌缩写是 5 个字符（LuoMa），比原来的 AKO 宽，方块相应加宽 */
+  width: 58px;
   height: 36px;
   border-radius: 11px;
   font-size: 13px;
   font-weight: 800;
-  letter-spacing: 0.5px;
-  color: var(--ako-on-brand);
-  background: linear-gradient(135deg, var(--ako-brand), var(--ako-brand-2));
+  letter-spacing: 0.2px;
+  color: var(--luoma-on-brand);
+  background: linear-gradient(135deg, var(--luoma-brand), var(--luoma-brand-2));
 }
 
 .logo-text {
@@ -174,7 +175,7 @@ const onSearch = async () => {
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 0.6px;
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
   }
 }
 
@@ -221,7 +222,7 @@ const onSearch = async () => {
     margin: 0 0 6px;
     font-size: 12px;
     font-weight: 700;
-    color: var(--ako-text-2);
+    color: var(--luoma-text-2);
 
     &:not(:first-child) {
       margin-top: 12px;
@@ -233,7 +234,7 @@ const onSearch = async () => {
     padding-left: 18px;
     font-size: 12px;
     line-height: 1.7;
-    color: var(--ako-text-2);
+    color: var(--luoma-text-2);
   }
 
   &__engines {

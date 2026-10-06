@@ -1,4 +1,4 @@
-import ako from '@/utils/http'
+import luoma from '@/utils/http'
 import * as iqdb from './iqdb'
 import * as tracemoe from './tracemoe'
 import { ellipsisName, getHMS } from '@/utils/format'
@@ -20,7 +20,7 @@ const requestIqdb = async (upload: SearchUpload, options: Record<string, unknown
   if (upload.source === 'url' && upload.remoteUrl) {
     form.append(IQDB_URL_PARAM, upload.remoteUrl)
   }
-  const res = await ako.post<string>('/iqdb', form, {
+  const res = await luoma.post<string>('/iqdb', form, {
     headers: { 'Content-Type': 'multipart/form-data' },
     responseType: 'text',
     transformResponse: [(data: string) => data],
@@ -43,7 +43,7 @@ const requestTraceMoe = async (upload: SearchUpload, options: Record<string, unk
   if (upload.source === 'url' && upload.remoteUrl) {
     params[TRACEMOE_URL_PARAM] = upload.remoteUrl
   }
-  const res = await ako.post<unknown>('/trace/search', form, {
+  const res = await luoma.post<unknown>('/trace/search', form, {
     headers: { 'Content-Type': 'multipart/form-data' },
     params,
   })

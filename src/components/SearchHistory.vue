@@ -7,7 +7,7 @@ const searchStore = useSearchStore()
 
 <template>
   <section v-if="searchStore.history.length" class="history">
-    <div class="ako-panel-title">
+    <div class="luoma-panel-title">
       <el-icon><Clock /></el-icon>
       最近搜索
       <el-button class="history__clear" link size="small" @click="searchStore.clearHistory()">
@@ -19,7 +19,7 @@ const searchStore = useSearchStore()
         <img class="history__thumb" :src="item.preview" :alt="`${item.engineLabel} 搜索记录`" />
         <div class="history__meta">
           <span class="history__engine">{{ item.engineLabel }}</span>
-          <span class="ako-muted">{{ item.count }} 条结果 · {{ fromNow(item.at) }}</span>
+          <span class="luoma-muted">{{ item.count }} 条结果 · {{ fromNow(item.at) }}</span>
         </div>
       </li>
     </ul>
@@ -48,10 +48,10 @@ const searchStore = useSearchStore()
   &__item {
     flex: 0 0 auto;
     width: 132px;
-    border: 1px solid var(--ako-border);
-    border-radius: var(--ako-radius-sm);
+    border: 1px solid var(--luoma-border);
+    border-radius: var(--luoma-radius-sm);
     overflow: hidden;
-    background: var(--ako-surface-2);
+    background: var(--luoma-surface-2);
   }
 
   &__thumb {
@@ -71,7 +71,7 @@ const searchStore = useSearchStore()
 
   &__engine {
     font-weight: 600;
-    color: var(--ako-text-2);
+    color: var(--luoma-text-2);
   }
 }
 </style>

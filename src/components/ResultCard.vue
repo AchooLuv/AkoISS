@@ -52,7 +52,7 @@ const tagItems = computed(() => props.item.tags ?? [])
 </script>
 
 <template>
-  <el-card class="result ako-fade-up" :class="{ 'is-marked': marked }" shadow="hover">
+  <el-card class="result luoma-fade-up" :class="{ 'is-marked': marked }" shadow="hover">
     <div class="result__head">
       <span class="result__index">#{{ index + 1 }}</span>
       <span class="result__name" :title="headerTitle">{{ headerTitle }}</span>
@@ -215,18 +215,18 @@ const tagItems = computed(() => props.item.tags ?? [])
 
 <style scoped lang="scss">
 .result {
-  border-radius: var(--ako-radius-lg);
-  border-color: var(--ako-border);
+  border-radius: var(--luoma-radius-lg);
+  border-color: var(--luoma-border);
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
 
   &:hover {
-    border-color: var(--ako-border-strong);
-    box-shadow: var(--ako-shadow);
+    border-color: var(--luoma-border-strong);
+    box-shadow: var(--luoma-shadow);
   }
 
   &.is-marked {
-    border-color: var(--ako-brand);
-    box-shadow: 0 0 0 3px var(--ako-brand-soft);
+    border-color: var(--luoma-brand);
+    box-shadow: 0 0 0 3px var(--luoma-brand-soft);
   }
 
   &__head {
@@ -242,14 +242,14 @@ const tagItems = computed(() => props.item.tags ?? [])
     border-radius: 999px;
     font-size: 11px;
     font-weight: 600;
-    color: var(--ako-text-3);
-    background: var(--ako-surface-2);
+    color: var(--luoma-text-3);
+    background: var(--luoma-surface-2);
   }
 
   &__name {
     font-size: 14px;
     font-weight: 600;
-    color: var(--ako-text);
+    color: var(--luoma-text);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -260,7 +260,7 @@ const tagItems = computed(() => props.item.tags ?? [])
     padding: 0;
     height: auto;
     font-size: 17px;
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
 
     .is-on {
       color: #f5a623;
@@ -278,9 +278,9 @@ const tagItems = computed(() => props.item.tags ?? [])
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--ako-radius);
+    border-radius: var(--luoma-radius);
     overflow: hidden;
-    background: var(--ako-surface-2);
+    background: var(--luoma-surface-2);
     min-height: 190px;
   }
 
@@ -301,14 +301,14 @@ const tagItems = computed(() => props.item.tags ?? [])
     width: 100%;
     height: 190px;
     font-size: 11px;
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
 
     .el-icon {
       font-size: 22px;
     }
 
     .is-spin {
-      animation: ako-spin 1s linear infinite;
+      animation: luoma-spin 1s linear infinite;
     }
   }
 
@@ -346,7 +346,7 @@ const tagItems = computed(() => props.item.tags ?? [])
 
   &__similarity-label {
     font-size: 11px;
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
   }
 
   &__time {
@@ -371,7 +371,7 @@ const tagItems = computed(() => props.item.tags ?? [])
 
   &__tags-label {
     font-size: 11px;
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
   }
 
   &__actions {
@@ -394,11 +394,11 @@ const tagItems = computed(() => props.item.tags ?? [])
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
   }
 }
 
-@keyframes ako-spin {
+@keyframes luoma-spin {
   to {
     transform: rotate(360deg);
   }

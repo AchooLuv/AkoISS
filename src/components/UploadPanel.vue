@@ -60,7 +60,7 @@ const onFileChange = (event: Event) => {
 
 <template>
   <section class="upload">
-    <div class="ako-panel-title">
+    <div class="luoma-panel-title">
       <el-icon><PictureFilled /></el-icon>
       待搜索图片
       <el-button v-if="upload" class="upload__clear" link size="small" @click="clear">
@@ -106,13 +106,13 @@ const onFileChange = (event: Event) => {
 
     <div v-if="upload" class="upload__meta">
       <span class="upload__name" :title="upload.file.name">{{ upload.file.name }}</span>
-      <span class="ako-muted">{{ sizeText }} · {{ sourceText }}</span>
+      <span class="luoma-muted">{{ sizeText }} · {{ sourceText }}</span>
     </div>
 
     <el-collapse class="upload__url">
       <el-collapse-item name="url">
         <template #title>
-          <span class="ako-muted">用图片地址搜索</span>
+          <span class="luoma-muted">用图片地址搜索</span>
         </template>
         <div class="upload__url-row">
           <el-input
@@ -132,7 +132,7 @@ const onFileChange = (event: Event) => {
             载入
           </el-button>
         </div>
-        <p class="ako-muted upload__url-tip">
+        <p class="luoma-muted upload__url-tip">
           会先下载图片再交给引擎，因此地址需允许跨域访问。
         </p>
       </el-collapse-item>
@@ -163,7 +163,7 @@ const onFileChange = (event: Event) => {
   }
 
   &__name {
-    color: var(--ako-text-2);
+    color: var(--luoma-text-2);
     font-weight: 500;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -205,26 +205,26 @@ const onFileChange = (event: Event) => {
   max-height: 260px;
   overflow: hidden;
   cursor: pointer;
-  border: 1.5px dashed var(--ako-border-strong);
-  border-radius: var(--ako-radius);
-  background: var(--ako-surface-2);
+  border: 1.5px dashed var(--luoma-border-strong);
+  border-radius: var(--luoma-radius);
+  background: var(--luoma-surface-2);
   transition: border-color 0.18s ease, background 0.18s ease;
 
   &:hover,
   &:focus-visible {
-    border-color: var(--ako-brand);
-    background: var(--ako-brand-soft);
+    border-color: var(--luoma-brand);
+    background: var(--luoma-brand-soft);
     outline: none;
   }
 
   &.has-image {
     border-style: solid;
-    background: var(--ako-surface);
+    background: var(--luoma-surface);
   }
 
   &.is-dragging {
-    border-color: var(--ako-brand);
-    background: var(--ako-brand-soft);
+    border-color: var(--luoma-brand);
+    background: var(--luoma-brand-soft);
     transform: scale(1.01);
   }
 
@@ -242,7 +242,7 @@ const onFileChange = (event: Event) => {
 
   &__icon {
     font-size: 34px;
-    color: var(--ako-brand);
+    color: var(--luoma-brand);
     margin-bottom: 6px;
   }
 
@@ -250,13 +250,13 @@ const onFileChange = (event: Event) => {
     margin: 0;
     font-size: 13px;
     font-weight: 600;
-    color: var(--ako-text);
+    color: var(--luoma-text);
   }
 
   &__hint {
     margin: 4px 0 0;
     font-size: 11px;
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
   }
 
   &__overlay {
@@ -284,8 +284,8 @@ const onFileChange = (event: Event) => {
     justify-content: center;
     font-size: 13px;
     font-weight: 600;
-    color: var(--ako-brand);
-    background: var(--ako-blur-bg);
+    color: var(--luoma-brand);
+    background: var(--luoma-blur-bg);
   }
 }
 </style>

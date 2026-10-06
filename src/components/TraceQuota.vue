@@ -30,7 +30,7 @@ const { loading, total, used, remaining, percent, level, failed, refresh } = use
       :percentage="percent"
       :stroke-width="5"
       :show-text="false"
-      :color="level === 'danger' ? 'var(--ako-danger)' : level === 'warn' ? 'var(--ako-warning)' : 'var(--ako-brand-2)'"
+      :color="level === 'danger' ? 'var(--luoma-danger)' : level === 'warn' ? 'var(--luoma-warning)' : 'var(--luoma-brand-2)'"
     />
     <p class="quota__hint">
       trace.moe 按访问 IP 计费，额度用尽后需等待次日重置（已用 {{ used ?? 0 }} 次）。
@@ -41,27 +41,27 @@ const { loading, total, used, remaining, percent, level, failed, refresh } = use
 <style scoped lang="scss">
 .quota {
   padding: 10px 12px;
-  border: 1px solid var(--ako-border);
-  border-radius: var(--ako-radius);
-  background: var(--ako-surface-2);
+  border: 1px solid var(--luoma-border);
+  border-radius: var(--luoma-radius);
+  background: var(--luoma-surface-2);
 
   &__row {
     display: flex;
     align-items: center;
     gap: 6px;
     font-size: 12px;
-    color: var(--ako-text-2);
+    color: var(--luoma-text-2);
   }
 
   &__label {
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
   }
 
   &__value {
     margin-left: auto;
 
     b {
-      color: var(--ako-text);
+      color: var(--luoma-text);
       font-size: 13px;
     }
   }
@@ -69,7 +69,7 @@ const { loading, total, used, remaining, percent, level, failed, refresh } = use
   &__refresh {
     padding: 0;
     height: auto;
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
   }
 
   &__bar {
@@ -80,16 +80,16 @@ const { loading, total, used, remaining, percent, level, failed, refresh } = use
     margin: 6px 0 0;
     font-size: 11px;
     line-height: 1.5;
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
   }
 
   &.is-danger {
-    border-color: var(--ako-danger);
+    border-color: var(--luoma-danger);
     background: rgba(220, 38, 38, 0.08);
   }
 
   &.is-warn {
-    border-color: var(--ako-warning);
+    border-color: var(--luoma-warning);
     background: rgba(217, 119, 6, 0.08);
   }
 }

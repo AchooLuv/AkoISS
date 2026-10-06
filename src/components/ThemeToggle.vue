@@ -31,7 +31,7 @@ const theme = useThemeStore()
   background: transparent;
 
   &:focus-visible {
-    outline: 2px solid var(--ako-brand);
+    outline: 2px solid var(--luoma-brand);
     outline-offset: 3px;
     border-radius: 999px;
   }
@@ -44,24 +44,24 @@ const theme = useThemeStore()
     width: 44px;
     height: 24px;
     border-radius: 999px;
-    border: 1px solid var(--ako-border-strong);
-    background: var(--ako-surface-2);
+    border: 1px solid var(--luoma-border-strong);
+    background: var(--luoma-surface-2);
     transition: background 0.24s ease, border-color 0.24s ease;
 
     &.is-dark {
-      background: color-mix(in srgb, var(--ako-brand) 26%, var(--ako-surface-2));
-      border-color: var(--ako-brand);
+      background: color-mix(in srgb, var(--luoma-brand) 26%, var(--luoma-surface-2));
+      border-color: var(--luoma-brand);
 
       .theme-toggle__icon {
         transform: rotate(180deg);
-        color: var(--ako-brand);
+        color: var(--luoma-brand);
       }
     }
   }
 
   &__icon {
     font-size: 14px;
-    color: var(--ako-text-2);
+    color: var(--luoma-text-2);
     transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 }

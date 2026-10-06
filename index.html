@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- 基础 SEO -->
-  <title>AKO 以图搜源 - 在线以图搜图，反查图片出处与番剧截图来源</title>
+  <title>骡马搜图 LuoMa - 在线以图搜图，反查图片出处与番剧截图来源</title>
   <meta name="description"
-    content="AKO 以图搜源是一个免费的在线以图搜图工具：上传、拖拽或粘贴一张动漫截图，即可通过 IQDB 在 Danbooru、yande.re、Konachan 等 8 个图库中反查原图出处，或通过 TRACE.MOE 定位截图出自哪部番剧的第几集第几秒。">
+    content="骡马搜图是一个免费的在线以图搜图工具：上传、拖拽或粘贴一张动漫截图，即可通过 IQDB 在 Danbooru、yande.re、Konachan 等 8 个图库中反查原图出处，或通过 TRACE.MOE 定位截图出自哪部番剧的第几集第几秒。">
   <meta name="keywords"
     content="以图搜图,以图搜番,图片出处查询,在线以图搜图,反向搜图,搜图工具,动漫截图识别,番剧截图定位,IQDB,TRACE.MOE,trace.moe,Danbooru,yande.re,Konachan,pixiv找图,图片来源查询,similar image search,anime scene search">
   <meta name="author" content="AchooLuv">
@@ -17,7 +17,7 @@
   <link rel="canonical" href="https://img.muri.life/">
 
   <!-- 站点信息 -->
-  <meta name="application-name" content="AKO 以图搜源">
+  <meta name="application-name" content="骡马搜图">
   <meta name="theme-color" content="#6d4df6" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0e1016" media="(prefers-color-scheme: dark)">
   <meta name="color-scheme" content="light dark">
@@ -25,25 +25,25 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="AKO 以图搜源">
+  <meta property="og:site_name" content="骡马搜图">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:url" content="https://img.muri.life/">
-  <meta property="og:title" content="AKO 以图搜源 - 在线以图搜图，反查图片出处与番剧截图来源">
+  <meta property="og:title" content="骡马搜图 LuoMa - 在线以图搜图，反查图片出处与番剧截图来源">
   <meta property="og:description"
     content="上传或粘贴一张截图，用 IQDB 反查原图出自哪个图库，用 TRACE.MOE 定位它出自哪部番剧的第几集第几秒。免费、免登录、支持深色模式。">
   <meta property="og:image" content="https://img.muri.life/og-image.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="AKO 以图搜源：上传截图反查图片来源与番剧出处">
+  <meta property="og:image:alt" content="骡马搜图：上传截图反查图片来源与番剧出处">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AKO 以图搜源 - 在线以图搜图与番剧截图定位">
+  <meta name="twitter:title" content="骡马搜图 - 在线以图搜图与番剧截图定位">
   <meta name="twitter:description"
     content="上传或粘贴截图，用 IQDB 反查原图出处，用 TRACE.MOE 定位番剧集数与时间点。免费、免登录。">
   <meta name="twitter:image" content="https://img.muri.life/og-image.png">
-  <meta name="twitter:image:alt" content="AKO 以图搜源">
+  <meta name="twitter:image:alt" content="骡马搜图">
 
   <!-- 图标 -->
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -59,15 +59,15 @@
           "@type": "WebSite",
           "@id": "https://img.muri.life/#website",
           "url": "https://img.muri.life/",
-          "name": "AKO 以图搜源",
-          "alternateName": ["AKO Image Source Search", "AkoISS"],
+          "name": "骡马搜图",
+          "alternateName": ["LuoMa Image Search", "LuoMaSouTu"],
           "description": "在线以图搜图工具，支持反查动漫图片出处与番剧截图定位。",
           "inLanguage": "zh-CN"
         },
         {
           "@type": "WebApplication",
           "@id": "https://img.muri.life/#app",
-          "name": "AKO 以图搜源",
+          "name": "骡马搜图",
           "url": "https://img.muri.life/",
           "applicationCategory": "UtilitiesApplication",
           "applicationSubCategory": "Reverse Image Search",
@@ -100,7 +100,7 @@
   <div id="app"></div>
   <noscript>
     <div style="max-width:640px;margin:60px auto;padding:0 20px;font-family:'PingFang SC','Microsoft YaHei',system-ui,sans-serif;line-height:1.8;color:#1e2237">
-      <h1>AKO 以图搜源 · 在线以图搜图工具</h1>
+      <h1>骡马搜图 · 在线以图搜图工具</h1>
       <p>本站需要在浏览器中启用 JavaScript 才能上传图片并执行搜索。请开启 JavaScript 后刷新页面。</p>
       <p>它能做什么：上传、拖拽或粘贴一张动漫截图，通过 <strong>IQDB</strong> 在 Danbooru、Konachan、yande.re、Gelbooru
         等 8 个图库中反查原图出处；或通过 <strong>TRACE.MOE</strong> 定位截图出自哪部番剧的第几集第几秒。免费、免登录。</p>

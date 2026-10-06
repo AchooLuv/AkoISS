@@ -1,4 +1,4 @@
-﻿import { ElNotification } from 'element-plus'
+import { ElNotification } from 'element-plus'
 
 type TipsLevel = 'success' | 'error' | 'warning' | 'info'
 
@@ -24,6 +24,6 @@ export const tipsType = (done: boolean, msg: string, level?: TipsLevel) => {
     offset: 78,
     duration: finalLevel === 'error' || finalLevel === 'warning' ? 0 : 3200,
     showClose: finalLevel === 'error' || finalLevel === 'warning',
-    customClass: 'ako-notification',
+    customClass: 'luoma-notification',
   })
 }

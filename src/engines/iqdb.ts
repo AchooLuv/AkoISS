@@ -1,4 +1,4 @@
-﻿import * as cheerio from 'cheerio'
+import * as cheerio from 'cheerio'
 import { translateTags } from '@/utils/tags'
 import type { ResultType } from '@/types/common'
 

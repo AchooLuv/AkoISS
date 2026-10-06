@@ -1,4 +1,4 @@
-﻿/** 文件相关的纯函数工具 */
+/** 文件相关的纯函数工具 */
 
 const MAX_FILE_SIZE = 8 * 1024 * 1024 // IQDB 限制 8MiB（表单 MAX_FILE_SIZE）
 export const ACCEPTED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']

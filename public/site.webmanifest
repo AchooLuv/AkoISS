@@ -1,6 +1,6 @@
 {
-  "name": "AKO 以图搜源",
-  "short_name": "AKO 搜源",
+  "name": "骡马搜图",
+  "short_name": "骡马搜图",
   "description": "在线以图搜图工具：反查动漫图片出处与番剧截图来源。",
   "lang": "zh-CN",
   "start_url": "/",

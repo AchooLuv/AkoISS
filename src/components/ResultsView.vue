@@ -28,7 +28,7 @@ const list = computed(() => resultStore.ordered(props.engineId))
 
 <template>
   <section class="results">
-    <header class="results__head ako-card">
+    <header class="results__head luoma-card">
       <div class="results__title">
         <span class="results__engine" :style="{ '--accent': engine.accent }">
           {{ engine.label }}
@@ -36,8 +36,8 @@ const list = computed(() => resultStore.ordered(props.engineId))
         <span v-if="!loading && searched" class="results__count">
           共 <b>{{ list.length }}</b> 条结果
         </span>
-        <span v-else-if="loading" class="ako-muted">正在检索…</span>
-        <span v-else class="ako-muted">尚未搜索</span>
+        <span v-else-if="loading" class="luoma-muted">正在检索…</span>
+        <span v-else class="luoma-muted">尚未搜索</span>
       </div>
       <div class="results__actions">
         <el-tag v-if="resultStore.markCount" size="small" type="warning" round effect="plain">
@@ -57,14 +57,14 @@ const list = computed(() => resultStore.ordered(props.engineId))
     </header>
 
     <div v-if="loading && !list.length" class="results__skeleton">
-      <div v-for="index in 3" :key="index" class="skeleton ako-card">
+      <div v-for="index in 3" :key="index" class="skeleton luoma-card">
         <el-skeleton :rows="3" animated />
       </div>
     </div>
 
     <el-alert
       v-else-if="error"
-      class="ako-fade-up"
+      class="luoma-fade-up"
       type="error"
       :closable="false"
       show-icon
@@ -91,7 +91,7 @@ const list = computed(() => resultStore.ordered(props.engineId))
     <template v-else>
       <el-alert
         v-if="hint"
-        class="ako-fade-up"
+        class="luoma-fade-up"
         type="info"
         :closable="false"
         show-icon
@@ -123,7 +123,7 @@ const list = computed(() => resultStore.ordered(props.engineId))
     margin: 0 auto;
     font-size: 12px;
     line-height: 1.7;
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
   }
 
   &__head {
@@ -134,8 +134,8 @@ const list = computed(() => resultStore.ordered(props.engineId))
     align-items: center;
     gap: 10px;
     padding: 12px 16px;
-    box-shadow: var(--ako-shadow-sm);
-    background: var(--ako-blur-bg);
+    box-shadow: var(--luoma-shadow-sm);
+    background: var(--luoma-blur-bg);
     backdrop-filter: saturate(180%) blur(10px);
   }
 
@@ -152,16 +152,16 @@ const list = computed(() => resultStore.ordered(props.engineId))
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.4px;
-    color: var(--ako-on-brand);
+    color: var(--luoma-on-brand);
     background: var(--accent);
   }
 
   &__count {
     font-size: 13px;
-    color: var(--ako-text-2);
+    color: var(--luoma-text-2);
 
     b {
-      color: var(--ako-text);
+      color: var(--luoma-text);
       font-size: 15px;
     }
   }

@@ -18,7 +18,7 @@ const active = computed(() => ENGINES)
 
 <template>
   <section class="engines">
-    <div class="ako-panel-title">
+    <div class="luoma-panel-title">
       <el-icon><Search /></el-icon>
       选择搜索引擎
     </div>
@@ -44,7 +44,7 @@ const active = computed(() => ENGINES)
     <el-collapse class="engines__more">
       <el-collapse-item name="planned">
         <template #title>
-          <span class="ako-muted">更多引擎（{{ planned.length }}）</span>
+          <span class="luoma-muted">更多引擎（{{ planned.length }}）</span>
         </template>
         <ul class="planned">
           <li v-for="item in planned" :key="item.id" class="planned__item">
@@ -89,10 +89,10 @@ const active = computed(() => ENGINES)
   padding: 10px 12px;
   text-align: left;
   cursor: pointer;
-  border: 1px solid var(--ako-border);
-  border-radius: var(--ako-radius);
-  background: var(--ako-surface);
-  color: var(--ako-text);
+  border: 1px solid var(--luoma-border);
+  border-radius: var(--luoma-radius);
+  background: var(--luoma-surface);
+  color: var(--luoma-text);
   transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
 
   &:hover {
@@ -102,7 +102,7 @@ const active = computed(() => ENGINES)
 
   &.is-active {
     border-color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 10%, var(--ako-surface));
+    background: color-mix(in srgb, var(--accent) 10%, var(--luoma-surface));
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
   }
 
@@ -127,7 +127,7 @@ const active = computed(() => ENGINES)
   &__desc {
     font-size: 11px;
     line-height: 1.5;
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
   }
 }
 
@@ -145,9 +145,9 @@ const active = computed(() => ENGINES)
     gap: 8px;
     font-size: 12px;
     padding: 6px 10px;
-    border-radius: var(--ako-radius-sm);
-    background: var(--ako-surface-2);
-    color: var(--ako-text-2);
+    border-radius: var(--luoma-radius-sm);
+    background: var(--luoma-surface-2);
+    color: var(--luoma-text-2);
   }
 
   &__name {
@@ -155,7 +155,7 @@ const active = computed(() => ENGINES)
   }
 
   &__sub {
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
     margin-right: auto;
   }
 }

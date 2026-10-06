@@ -11,7 +11,7 @@ const options = computed(() => engine.value?.options ?? [])
   <section v-if="options.length" class="options">
     <div class="options__head">
       <span>搜索选项</span>
-      <span class="ako-muted">作用于 {{ engine?.label }}</span>
+      <span class="luoma-muted">作用于 {{ engine?.label }}</span>
     </div>
     <el-checkbox
       v-for="option in options"
@@ -33,7 +33,7 @@ const options = computed(() => engine.value?.options ?? [])
     align-items: baseline;
     justify-content: space-between;
     font-size: 12px;
-    color: var(--ako-text-2);
+    color: var(--luoma-text-2);
     margin-bottom: 6px;
   }
 
@@ -54,12 +54,12 @@ const options = computed(() => engine.value?.options ?? [])
 
   &__label {
     font-size: 13px;
-    color: var(--ako-text);
+    color: var(--luoma-text);
   }
 
   &__hint {
     font-size: 11px;
-    color: var(--ako-text-3);
+    color: var(--luoma-text-3);
   }
 }
 </style>

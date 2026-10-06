@@ -1,4 +1,4 @@
-﻿import axios from 'axios'
+import axios from 'axios'
 import { tipsType } from '@/utils/notify'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
@@ -63,6 +63,6 @@ class Request {
   }
 }
 
-const ako = new Request({})
+const luoma = new Request({})
 
-export default ako
+export default luoma

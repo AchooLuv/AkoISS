@@ -3,7 +3,7 @@ import { computed, ref, watch } from 'vue'
 
 type ThemeMode = 'light' | 'dark'
 
-const STORAGE_KEY = 'ako:theme'
+const STORAGE_KEY = 'luoma:theme'
 
 const readStored = (): ThemeMode | null => {
   const value = localStorage.getItem(STORAGE_KEY)

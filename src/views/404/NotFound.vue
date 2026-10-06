@@ -8,7 +8,7 @@ const imgSrc = new URL('@/assets/images/404.png', import.meta.url).href
       <el-image class="notfound__image" :src="imgSrc" alt="404" />
     </div>
     <p class="notfound__title">这个页面不存在</p>
-    <p class="ako-muted">可能是链接拼错了，也可能它已经下线了。</p>
+    <p class="luoma-muted">可能是链接拼错了，也可能它已经下线了。</p>
     <router-link to="/">
       <el-button type="primary" size="small" round>返回首页</el-button>
     </router-link>
@@ -39,7 +39,7 @@ const imgSrc = new URL('@/assets/images/404.png', import.meta.url).href
     margin: 0;
     font-size: 17px;
     font-weight: 700;
-    color: var(--ako-text);
+    color: var(--luoma-text);
   }
 
   .el-button {

@@ -1,6 +1,6 @@
-﻿<div align="center">
+<div align="center">
 
-# AKO 以图搜源 · AkoISS
+# 骡马搜图 · LuoMaSouTu
 
 **以图搜图 / 以图搜番 Web 应用 —— 反查动漫图片的原始出处，定位番剧截图出自哪一集哪一秒**
 
@@ -21,7 +21,7 @@
 
 ---
 
-**AKO 以图搜源（AkoISS）** 是一个免费、免登录的**在线以图搜图工具**，把 [IQDB](https://iqdb.org/) 与
+**骡马搜图（LuoMaSouTu）** 是一个免费、免登录的**在线以图搜图工具**，把 [IQDB](https://iqdb.org/) 与
 [trace.moe](https://trace.moe/) 两个以图搜图引擎聚合到一个界面里：
 
 - 想查**「这张动漫图出自哪里 / 原图在哪」** → 用 IQDB，在 Danbooru、Konachan、yande.re、Gelbooru、Sankaku、e-shuushuu、Zerochan、Anime-Pictures 共 8 个图库中反查出处
@@ -218,7 +218,7 @@ src/
 
 **4. 双主题**
 
-所有颜色收敛到 `src/assets/styles/tokens.scss` 的 `--ako-*` CSS 变量，并把 Element Plus
+所有颜色收敛到 `src/assets/styles/tokens.scss` 的 `--luoma-*` CSS 变量，并把 Element Plus
 的变量映射到同一套令牌上，因此主题切换只需在 `<html>` 上增删 `.dark` 类。
 
 ## 🔐 依赖与安全
