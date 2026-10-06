@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import ResultCard from './ResultCard.vue'
-import { collectFields, getEngine } from '@/engines'
+import { collectEmptyReason, collectFields, collectFiltered, collectHint, getEngine } from '@/engines'
 import { useResultStore } from '@/stores/result'
 import { useSearchStore } from '@/stores/search'
 import type { EngineId } from '@/types/common'
@@ -12,8 +12,6 @@ const props = defineProps<{
   error: string | null
   /** 该引擎是否已经执行过至少一次搜索 */
   searched: boolean
-  /** 结果区的补充说明，例如被阈值过滤掉的候选数量 */
-  hint?: string | null
 }>()
 
 const emit = defineEmits<{ (event: 'retry'): void }>()
@@ -23,7 +21,24 @@ const resultStore = useResultStore()
 
 const engine = computed(() => getEngine(props.engineId))
 const fields = computed(() => collectFields(props.engineId))
-const list = computed(() => resultStore.ordered(props.engineId))
+/** 解析层返回的原始结果（过滤器以它为输入，单独保留用于解释"为什么一条都没有"） */
+const rawList = computed(() => resultStore.results[props.engineId])
+/**
+ * 过滤在渲染时计算，因此调整「最低匹配率」或「R18 过滤」会即时生效，
+ * 不需要重新请求图源。
+ */
+const filtered = computed(() =>
+  collectFiltered(props.engineId, rawList.value, searchStore.options[props.engineId] ?? {})
+)
+const list = computed(() => resultStore.ordered(props.engineId, filtered.value.list))
+const hint = computed(() => collectHint(props.engineId, list.value, filtered.value) ?? null)
+const emptyReason = computed(
+  () => collectEmptyReason(props.engineId, filtered.value, rawList.value) ?? null
+)
+/** 被过滤条件隐藏的总条数，用于空态时给出可操作的提示 */
+const filteredHidden = computed(
+  () => filtered.value.hiddenBySimilarity + filtered.value.hiddenByR18
+)
 </script>
 
 <template>
@@ -83,8 +98,10 @@ const list = computed(() => resultStore.ordered(props.engineId))
       :image-size="140"
       :description="searched ? '没有匹配到结果，试试换一张更清晰的图' : '上传图片并选择引擎后开始搜索'"
     >
-      <template v-if="searched && hint" #description>
-        <p class="results__empty-text">{{ hint }}</p>
+      <template v-if="searched && (emptyReason || filteredHidden)" #description>
+        <p class="results__empty-text">
+          {{ emptyReason ?? `有 ${filteredHidden} 条结果因过滤条件被隐藏，可以调低过滤条件再看。` }}
+        </p>
       </template>
     </el-empty>
 

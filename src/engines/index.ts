@@ -112,6 +112,29 @@ const traceMoeFields: ResultField[] = [
   },
 ]
 
+/**
+ * IQDB 结果「匹配率」的默认下限（界面上的百分比整数）。
+ *
+ * 注意量纲差异：IQDB 的匹配度是缩略图层面的视觉相似度，实测同一张图的
+ * 候选普遍落在 15%~26%，远低于 trace.moe 的帧级相似度（常见 80%~95%）。
+ * 若照搬 trace.moe 那种 60% 阈值，会把全部结果挡掉、看起来像搜索坏了，
+ * 所以这里按实测分布取 20%：能滤掉明显不相关的结果，又不会清空列表。
+ */
+export const IQDB_MIN_SIMILARITY = 20
+/** TRACE.MOE 结果「匹配率」的默认下限：与解析层的保留阈值一致 */
+export const TRACEMOE_FILTER_DEFAULT = Math.round(TRACEMOE_MIN_SIMILARITY * 100)
+
+/**
+ * IQDB 判定为 R18 的图库评级。
+ * Danbooru 系分级：Safe / Questionable / Explicit，另加 IQDB 自身的 Ero、Unrated。
+ * 其中 Ero、Explicit 属于明确的 R18；Questionable 也按 R18 处理（预期用户是要挡掉这类内容）。
+ * Unrated 无法判断，保守起见不算 R18。
+ */
+const R18_LEVELS = new Set(['ero', 'explicit', 'questionable'])
+
+/** 过滤项不需要发给图源接口，这里统一切掉 */
+const REQUEST_OPTION_IDS = new Set(['minSimilarity', 'hideR18'])
+
 export const ENGINES: EngineDef[] = [
   {
     id: 'iqdb',
@@ -128,6 +151,25 @@ export const ENGINES: EngineDef[] = [
         param: 'forcegray',
         value: 'on',
         // 灰度匹配会牺牲彩色特征，默认不开启
+        defaultChecked: false,
+      },
+      {
+        id: 'minSimilarity',
+        label: '最低匹配率',
+        hint: '低于该匹配率的结果不展示',
+        type: 'slider',
+        min: 0,
+        max: 90,
+        step: 5,
+        suffix: '%',
+        value: IQDB_MIN_SIMILARITY,
+        defaultChecked: true,
+      },
+      {
+        id: 'hideR18',
+        label: '过滤 R18 内容',
+        hint: '隐藏图库标记为 Ero / Questionable 的结果，默认不过滤',
+        type: 'switch',
         defaultChecked: false,
       },
     ],
@@ -148,6 +190,18 @@ export const ENGINES: EngineDef[] = [
         hint: '去掉上下黑边或水印边框后再匹配，可提升命中率',
         param: 'cutBorders',
         value: true,
+        defaultChecked: true,
+      },
+      {
+        id: 'minSimilarity',
+        label: '最低匹配率',
+        hint: '低于该匹配率的结果不展示',
+        type: 'slider',
+        min: 0,
+        max: 95,
+        step: 5,
+        suffix: '%',
+        value: TRACEMOE_FILTER_DEFAULT,
         defaultChecked: true,
       },
     ],
@@ -175,27 +229,116 @@ export const defaultOptions = (id: EngineId): Record<string, unknown> =>
 export const collectFields = (id: EngineId): ResultField[] =>
   id === 'iqdb' ? iqdbFields : traceMoeFields
 
+export interface FilterResult {
+  /** 过滤后保留下来的结果 */
+  list: ResultType[]
+  /** 因最低匹配率被隐藏的条数 */
+  hiddenBySimilarity: number
+  /** 因 R18 过滤被隐藏的条数 */
+  hiddenByR18: number
+  /** 当前生效的最低匹配率 */
+  threshold: number
+  /** 是否开启了 R18 过滤 */
+  hideR18: boolean
+}
+
 /**
- * 结果区的补充说明。IQDB 与 trace.moe 的"匹配度"含义不同，
- * 需要向用户解释，否则很容易把 26% 误读成"几乎没匹配上"。
+ * 客户端结果过滤：最低匹配率 + R18。
+ * 这两项都作用于已取回的结果（图源接口本身不提供这些参数），
+ * 所以调整选项时会立即重新筛选，不需要重新请求。
  */
-export const collectHint = (id: EngineId, list: ResultType[]): string | undefined => {
-  if (id === 'iqdb') {
-    return list.length
-      ? 'IQDB 的匹配度表示缩略图层面的视觉相似度，20% 以上即可能是同一张图的转载或裁剪版本，建议以图库详情页为准。'
-      : undefined
+export const collectFiltered = (
+  id: EngineId,
+  list: ResultType[],
+  options: Record<string, unknown>
+): FilterResult => {
+  const rawThreshold = Number(options.minSimilarity)
+  const threshold = Number.isFinite(rawThreshold) ? rawThreshold : 0
+  const hideR18 = Boolean(options.hideR18)
+
+  let hiddenBySimilarity = 0
+  let hiddenByR18 = 0
+  const kept: ResultType[] = []
+
+  for (const item of list) {
+    if (item.similarity < threshold) {
+      hiddenBySimilarity++
+      continue
+    }
+    if (hideR18 && id === 'iqdb' && item.level && R18_LEVELS.has(item.level.toLowerCase())) {
+      hiddenByR18++
+      continue
+    }
+    kept.push(item)
   }
 
-  const report = lastReport(list)
-  if (report && report.total > 0 && report.rejected === report.total) {
+  return { list: kept, hiddenBySimilarity, hiddenByR18, threshold, hideR18 }
+}
+
+/** 从选项里挑出真正要发给图源的参数（过滤项只作用于本地结果） */
+export const toRequestOptions = (options: Record<string, unknown>): Record<string, unknown> =>
+  Object.fromEntries(Object.entries(options).filter(([key]) => !REQUEST_OPTION_IDS.has(key)))
+
+/**
+ * 结果区的补充说明。
+ * - IQDB 与 trace.moe 的「匹配度」含义不同，需要向用户解释
+ * - 被过滤掉多少条也要如实说明，否则用户会以为"结果丢了"
+ * - filter 由界面在渲染时算好传入，这样调整阈值后说明会同步更新
+ */
+export const collectHint = (
+  id: EngineId,
+  kept: ResultType[],
+  filter?: FilterResult | null
+): string | undefined => {
+  if (!kept.length) return undefined
+
+  const parts: string[] = []
+  if (filter?.hiddenBySimilarity) {
+    parts.push(`已按最低匹配率 ${filter.threshold}% 隐藏 ${filter.hiddenBySimilarity} 条候选`)
+  }
+  if (filter?.hiddenByR18) {
+    parts.push(`已隐藏 ${filter.hiddenByR18} 条 R18 结果`)
+  }
+
+  if (id === 'iqdb') {
+    parts.push(
+      'IQDB 的匹配度表示缩略图层面的视觉相似度，20% 以上即可能是同一张图的转载或裁剪版本，建议以图库详情页为准'
+    )
+  }
+
+  return parts.length ? parts.join('；') + '。' : undefined
+}
+
+/**
+ * 结果整体为空时的原因说明（区别于 collectHint：那条只在有结果时展示）。
+ * rawList 必须是解析层返回的原始数组——解析层用它作为 key 记录了
+ * "因相似度不足被丢弃"的条数，用来解释为什么一条都没有。
+ */
+export const collectEmptyReason = (
+  id: EngineId,
+  filter?: FilterResult | null,
+  rawList?: ResultType[]
+): string | undefined => {
+  if (id === 'iqdb') {
+    if (filter?.hiddenBySimilarity || filter?.hiddenByR18) {
+      const parts: string[] = []
+      if (filter.hiddenBySimilarity) {
+        parts.push(`有结果低于当前的 ${filter.threshold}% 最低匹配率`)
+      }
+      if (filter.hiddenByR18) parts.push('有结果被 R18 过滤隐藏')
+      return `${parts.join('，')}。可以调低过滤条件再看。`
+    }
+    return undefined
+  }
+
+  const report = rawList ? lastReport(rawList) : undefined
+  if (report && report.total > 0) {
     return `接口返回了 ${report.total} 条候选，但相似度均低于 ${Math.round(
       TRACEMOE_MIN_SIMILARITY * 100
     )}%，已全部过滤——通常说明这张图不是番剧截图，或截图经过了明显裁剪、滤镜处理。`
   }
-  if (report && report.total > 0 && report.rejected > 0) {
-    return `另有 ${report.rejected} 条候选因相似度低于 ${Math.round(
-      TRACEMOE_MIN_SIMILARITY * 100
-    )}% 未展示。`
+  if (filter?.hiddenBySimilarity) {
+    return `有 ${filter.hiddenBySimilarity} 条候选低于当前的 ${filter.threshold}% 最低匹配率，可以调低阈值再看。`
   }
   return undefined
 }

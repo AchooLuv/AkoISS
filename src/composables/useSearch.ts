@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { collectHint, getEngine } from '@/engines'
+import { collectEmptyReason, collectFiltered, getEngine, toRequestOptions } from '@/engines'
 import { useResultStore } from '@/stores/result'
 import { useSearchStore } from '@/stores/search'
 import { tipsType } from '@/utils/notify'
@@ -20,17 +20,17 @@ export const useSearch = () => {
     if (resultStore.loading[engineId]) return
 
     const engine = getEngine(engineId)
+    const options = searchStore.options[engineId] ?? {}
     resultStore.setLoading(engineId, true)
     resultStore.setError(engineId, null)
     resultStore.setHint(engineId, null)
     busy.value = true
 
     try {
-      const raw = await engine.request(upload, searchStore.options[engineId] ?? {})
+      // 最低匹配率与 R18 过滤只在本地筛选，不发给图源
+      const raw = await engine.request(upload, toRequestOptions(options))
       const list = engine.parse(raw)
       resultStore.setResult(engineId, list)
-      // 解析层可能记录了"被阈值过滤掉多少条"，转成用户能看懂的一句话
-      resultStore.setHint(engineId, collectHint(engineId, list) ?? null)
       searchStore.markSearched(engineId)
       searchStore.pushHistory({
         engine: engineId,
@@ -39,10 +39,12 @@ export const useSearch = () => {
         count: list.length,
       })
 
-      if (list.length) {
-        tipsType(true, `${engine.label} 命中 ${list.length} 条结果`)
+      // 界面上的结果条数以过滤后为准
+      const { list: kept } = collectFiltered(engineId, list, options)
+      if (kept.length) {
+        tipsType(true, `${engine.label} 命中 ${kept.length} 条结果`)
       } else {
-        const reason = resultStore.hints[engineId]
+        const reason = collectEmptyReason(engineId, collectFiltered(engineId, list, options), list)
         tipsType(false, reason ?? '没有找到匹配结果，可尝试换一张更清晰的图片', 'warning')
       }
     } catch (error) {

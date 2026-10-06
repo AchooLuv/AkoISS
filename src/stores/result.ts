@@ -35,9 +35,14 @@ export const useResultStore = defineStore('result', () => {
     marked.value = isMarked(id) ? marked.value.filter((item) => item !== id) : [...marked.value, id]
   }
 
-  /** 已标记的排前面，其余保持引擎返回的相似度顺序 */
-  const ordered = (id: EngineId): ResultType[] =>
-    [...results.value[id]].sort((a, b) => Number(isMarked(b.id)) - Number(isMarked(a.id)))
+  /**
+   * 已标记的排前面，其余保持引擎返回的相似度顺序。
+   * 传入 list 时以它为准（用于过滤后的结果），否则取该引擎的原始结果。
+   */
+  const ordered = (id: EngineId, list?: ResultType[]): ResultType[] =>
+    [...(list ?? results.value[id])].sort(
+      (a, b) => Number(isMarked(b.id)) - Number(isMarked(a.id))
+    )
 
   const markCount = computed(() => marked.value.length)
 

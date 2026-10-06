@@ -15,17 +15,28 @@ export interface SearchUpload {
   remoteUrl?: string
 }
 
+/** 引擎可选项类型：勾选框 / 滑块。过滤类选项走客户端筛选，不会发请求。 */
+export type EngineOptionType = 'switch' | 'slider'
+
 /** 引擎可选项（对应原来 treeData 的二级节点） */
-interface EngineOption {
+export interface EngineOption {
   /** 选项标识，同时作为配置项 key */
   id: string
   label: string
   hint?: string
-  /** 传给引擎的请求参数名 */
-  param: string
+  /** 控件类型，默认 switch */
+  type?: EngineOptionType
+  /** 传给引擎的请求参数名；纯客户端过滤项不需要 */
+  param?: string
   /** 参数值，默认 true / 'on' */
   value?: unknown
   defaultChecked?: boolean
+  /** slider 专用：取值范围与步长 */
+  min?: number
+  max?: number
+  step?: number
+  /** slider 专用：值的后缀，如 '%' */
+  suffix?: string
 }
 
 /** 引擎定义：把"请求怎么发、响应怎么解析、结果怎么展示"收拢到一处 */

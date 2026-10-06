@@ -29,7 +29,6 @@ const plannedEngines = [
 
 const loading = computed(() => resultStore.loading[searchStore.engineId])
 const error = computed(() => resultStore.errors[searchStore.engineId])
-const hint = computed(() => resultStore.hints[searchStore.engineId])
 const searched = computed(() => searchStore.searched[searchStore.engineId])
 const canSearch = computed(() => Boolean(searchStore.upload) && !loading.value)
 
@@ -137,7 +136,6 @@ const onSearch = async () => {
           :engine-id="searchStore.engineId"
           :loading="loading"
           :error="error"
-          :hint="hint"
           :searched="searched"
           @retry="onSearch"
         />
