@@ -1,13 +1,17 @@
-const { createProxyMiddleware } = require('http-proxy-middleware')
+import { createProxyMiddleware } from 'http-proxy-middleware'
 
 /**
- * Vercel Serverless 代理：把 /iqdb/* 与 /trace/* 转发到对应图源。
+ * Vercel Serverless 代理：/iqdb/* → iqdb.org，/trace/* → api.trace.moe
  *
- * 两个易踩的点：
- * 1. iqdb.org 在明文 HTTP 上会 301 跳到 HTTPS，target 必须用 https。
+ * 与原实现相比只有一处必要的改动：从 CommonJS（require / module.exports）
+ * 改为 ESM（import / export default）。原因是根 package.json 声明了 "type": "module"，
+ * 同目录的 .js 会被 Node 当 ES 模块，require 会直接抛
+ * "require is not defined in ES module scope"，函数一加载就崩（所有接口 500）。
+ *
+ * 另外两点注意：
+ * 1. 上游必须用 https —— iqdb.org 在明文 HTTP 上会 301 跳转。
  * 2. 经 vercel.json rewrite 之后 req.url 可能已被改写成 /api/proxy，
- *    所以这里同时从 x-forwarded-uri / x-now-route-matches 里兜底取原始路径，
- *    否则 target 会落空、代理静默失败。
+ *    所以这里同时从 x-forwarded-uri / x-now-route-matches 兜底取原始路径。
  */
 const TARGETS = {
   iqdb: 'https://iqdb.org',
@@ -24,13 +28,13 @@ const resolveTarget = (req) => {
 
   for (const candidate of candidates) {
     if (typeof candidate !== 'string') continue
-    const match = candidate.match(/(?:^|[/=&])(iqdb|trace)(?=[/?]|$)/)
+    const match = candidate.match(/(?:^|[/=&?])(iqdb|trace)(?=[/?]|$)/)
     if (match) return { key: match[1], target: TARGETS[match[1]] }
   }
   return null
 }
 
-module.exports = (req, res) => {
+export default function handler(req, res) {
   const resolved = resolveTarget(req)
 
   if (!resolved) {
@@ -43,7 +47,6 @@ module.exports = (req, res) => {
   createProxyMiddleware({
     target: resolved.target,
     changeOrigin: true,
-    secure: true,
     pathRewrite: {
       '^/iqdb': '',
       '^/trace': '',
