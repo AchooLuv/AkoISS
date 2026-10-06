@@ -39,21 +39,32 @@ const onReady = (upload: SearchUpload) => {
   emit('change', upload)
 }
 
-const { urlInput, fetching, isDragging, fromUrl, onDragEnter, onDragLeave, onDrop, clear } =
-  useImageInput(onReady, () => emit('clear'))
+const {
+  urlInput,
+  fetching,
+  compressing,
+  isDragging,
+  acceptFile,
+  fromUrl,
+  onDragEnter,
+  onDragLeave,
+  onDrop,
+  clear,
+} = useImageInput(onReady, () => emit('clear'))
+
+/** 压缩大图期间也视为忙碌 */
+const busy = computed(() => Boolean(props.loading) || compressing.value)
 
 const pickFile = () => {
-  if (props.loading) return
+  if (busy.value) return
   fileInput.value?.click()
 }
 
 const onFileChange = (event: Event) => {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
-  if (file) {
-    releasePreview()
-    emit('change', { source: 'file', file, preview: URL.createObjectURL(file) })
-  }
+  // 走与拖拽/粘贴相同的流程，确保大图也会被压缩
+  if (file) void acceptFile(file, 'file')
   input.value = ''
 }
 </script>
@@ -78,7 +89,7 @@ const onFileChange = (event: Event) => {
 
     <div
       class="dropzone"
-      :class="{ 'is-dragging': isDragging, 'has-image': !!upload }"
+      :class="{ 'is-dragging': isDragging, 'has-image': !!upload, 'is-busy': busy }"
       role="button"
       tabindex="0"
       @click="pickFile"
@@ -102,6 +113,10 @@ const onFileChange = (event: Event) => {
         </el-button>
       </div>
       <div v-if="isDragging" class="dropzone__dragging">松开即可载入</div>
+      <div v-if="compressing" class="dropzone__dragging">
+        <el-icon class="is-spin"><Loading /></el-icon>
+        正在压缩图片…
+      </div>
     </div>
 
     <div v-if="upload" class="upload__meta">
