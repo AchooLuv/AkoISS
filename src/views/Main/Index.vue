@@ -20,6 +20,9 @@ const { refresh: refreshQuota } = useTraceQuota()
 
 const helpVisible = ref(false)
 
+/** 品牌图标（源自 404.webp，已按 2x 屏预生成 128px 小图，避免每页下载大图） */
+const logoSrc = new URL('@/assets/images/logo.webp', import.meta.url).href
+
 /** 未接入的引擎在这里如实标注状态，避免用户以为功能缺失 */
 const plannedEngines = [
   { label: 'ASCII2D', status: 0 },
@@ -46,7 +49,7 @@ const onSearch = async () => {
     <header class="luoma-header">
       <div class="luoma-container luoma-header__inner">
         <div class="luoma-header__logo">
-          <span class="logo-mark">LuoMa</span>
+          <img class="logo-mark" :src="logoSrc" alt="骡马搜图" width="36" height="36" />
           <span class="logo-text">
             <b>骡马搜图</b>
             <small>LuoMa Image Search</small>
@@ -146,18 +149,12 @@ const onSearch = async () => {
 
 <style scoped lang="scss">
 .logo-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  /* 品牌缩写是 5 个字符（LuoMa），比原来的 AKO 宽，方块相应加宽 */
-  width: 58px;
+  /* 品牌图标：已按 2x 屏预生成 128px 源图，这里按 36px 显示 */
+  display: block;
+  width: 36px;
   height: 36px;
-  border-radius: 11px;
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.2px;
-  color: var(--luoma-on-brand);
-  background: linear-gradient(135deg, var(--luoma-brand), var(--luoma-brand-2));
+  flex: 0 0 auto;
+  object-fit: contain;
 }
 
 .logo-text {

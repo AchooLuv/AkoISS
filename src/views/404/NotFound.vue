@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const imgSrc = new URL('@/assets/images/404.png', import.meta.url).href
+const imgSrc = new URL('@/assets/images/404.webp', import.meta.url).href
 </script>
 
 <template>
